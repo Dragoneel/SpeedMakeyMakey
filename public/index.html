@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Speed Makey Makey</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font: 13px Helvetica, Arial; }
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) { background: #eee; }
+    </style>
+  </head>
+  <body>
+    <h2 id="player1">Player one <small></small></h2>
+    <ul id="cards_list1"></ul>
+    <br><br><br>
+    <h2 id="player2">Player two <small></small></h2>
+    <ul id="cards_list2"></ul>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io();
+      var playerCounter1 = 0;
+      var playerCounter2 = 0;
+      // $('form').submit(function(){
+      //   socket.emit('socket message', $('#m').val());
+      //   $('#m').val('');
+      //   return false;
+      // });
+      // socket.on('socket message', function(msg){
+      //   $('#messages').append($('<li>').text(msg));
+      // });
+      
+      $(document).keydown(function( event ) {
+        
+        // Player 1  
+        if ( event.which == 38 ) {
+          playerCounter1++;
+          var msg = "(" + playerCounter1 + ")";
+          $('#cards_list1').append($('<li>').html("<img src=\"/images/cards/1.png\">"));
+          $("#player1 small").html(msg);
+        }
+        if ( event.which == 40 ) {
+          playerCounter1++;
+          var msg = "(" + playerCounter1 + ")";
+          $('#cards_list1').append($('<li>').html("I take the totem"));
+          $("#player1 small").html(msg);
+        }
+        
+        // Player 2  
+        if ( event.which == 37 ) {
+          playerCounter2++;
+          var msg = "(" + playerCounter2 + ")";
+          $('#cards_list2').append($('<li>').html("I take the totem"));
+          $("#player2 small").html(msg);
+        }
+        if ( event.which == 39 ) {
+          playerCounter2++;
+          var msg = "(" + playerCounter2 + ")";
+          $('#cards_list2').append($('<li>').html("<img src=\"/images/cards/1.png\">"));
+          $("#player2 small").html(msg);
+        }
+      });
+
+    </script>
+  </body>
+</html>

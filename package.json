@@ -1,0 +1,10 @@
+{
+  "name": "speed-makey-makey",
+  "version": "0.0.1",
+  "description": "Jungle speed like game with makey makey",
+  "dependencies": {
+    "express": "4.10.2",
+    "keypress": "^0.2.1",
+    "socket.io": "1.2.0"
+  }
+}
