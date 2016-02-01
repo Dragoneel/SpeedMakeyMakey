@@ -2,133 +2,136 @@
 <html>
   <head>
     <title>Speed Makey Makey</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial;
-        background-image: url("images/bg.png");
-      }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-      .totem{
-         position: absolute;
-         top: 50%;
-         left: 50%;
-         margin-top: -150px; /* Half the height */
-         margin-left: -100px; /* Half the width */
-      }
-      /*  PLAYER */
-      .player1{
-        position: absolute;
-        top: 0;
-        left: 50%;
-        margin-left: -150px;
-      }
-      .player1 h3{
-        text-align: center;
-      }
-      .player1 .cards{
-        background: #fff;
-        height: 250px;
-        width: 200px;
-        border-radius: 6px;
-        border: 6px solid #f7a23c;
-        margin-top: 15px;
-        float: left;
-        text-align: right;
-        padding-top: 212px;
-        padding-right: 4px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #f7a23c;
-      }
-      .player1 .cards span{
-      }
-      .player1 .deck{
-        float: right;
-        margin-left: 20px;
-        background: #f7a23c;
-        height: 130px;
-        width: 100px;
-        border-radius: 6px;
-        margin-top: 60px;
-        text-align: center;
-        font-size: 48px;
-        font-weight: bold;
-        color: #fff;
-        line-height: 125px;
-      }
-      .player1 .deck span{
-        
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-
-
     <div class="game">
       <div class="player1">
-        <h3 class="player_name">Dchar</h3>
+        <h3 class="player_name">Player 1</h3>
         <div class="cards">
-          <span>3</span>
+          <span>0</span>
         </div>
         <div class="deck">
-          <span>11</span>
+          <span>7</span>
         </div>
       </div>
-      <div class="player2"></div>
+      <div class="player2">
+        <h3 class="player_name">Player 2</h3>
+        <div class="cards">
+          <span>0</span>
+        </div>
+        <div class="deck">
+          <span>7</span>
+        </div>
+      </div>
       <div class="player3"></div>
       <div class="player4"></div>
       <img src="images/totem.png" alt="" class="totem">
     </div>
-
-
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io();
-      var playerCounter1 = 0;
-      var playerCounter2 = 0;
-      // $('form').submit(function(){
-      //   socket.emit('socket message', $('#m').val());
-      //   $('#m').val('');
-      //   return false;
-      // });
-      // socket.on('socket message', function(msg){
-      //   $('#messages').append($('<li>').text(msg));
-      // });
-      
       $(document).keydown(function( event ) {
         
         // Player 1  
         if ( event.which == 38 ) {
-          playerCounter1++;
-          var msg = "(" + playerCounter1 + ")";
-          $('#cards_list1').append($('<li>').html("<img src=\"/images/cards/1.png\">"));
-          $("#player1 small").html(msg);
+
+          // Display totem if hidden
+          $(".totem").show();
+
+          // Player one action
+          $.ajax({
+              url:"/api/player1",
+              type: 'get',
+              success: function(res) {
+
+                  $(".player1 .cards").css('background-image','url("images/cards/'+res.url+'.png")');
+                  $(".player1 .cards span").html(res.tailleTas);
+                  $(".player1 .deck span").html(res.tailleDeck);
+
+                  var audio = new Audio('sounds/'+res.url+'.mp3');
+                  audio.play();
+                  if (res.tailleDeck == 0) {
+                    alert("Player 1 win")
+                  };
+              },
+              error:function(xhr, status, error){
+              
+                  console.log(xhr.responseText);
+                  return false;
+              }
+          });
+
+
+          
+          
         }
+
         if ( event.which == 40 ) {
-          playerCounter1++;
-          var msg = "(" + playerCounter1 + ")";
-          $('#cards_list1').append($('<li>').html("I take the totem"));
-          $("#player1 small").html(msg);
+          
+          // Hide totem
+          $(".totem").hide();
+              $.ajax({
+                url:"/api/p1tp2",
+                type: 'get',
+                success: function(res) {
+                    
+                    console.log(res);
+                },
+                error:function(xhr, status, error){
+                
+                    console.log(xhr.responseText);
+                    return false;
+                }
+            });
         }
         
         // Player 2  
         if ( event.which == 37 ) {
-          playerCounter2++;
-          var msg = "(" + playerCounter2 + ")";
-          $('#cards_list2').append($('<li>').html("I take the totem"));
-          $("#player2 small").html(msg);
+          
+          // Display totem if hidden
+          $(".totem").show();
+
+          $.ajax({
+              url:"/api/player2",
+              type: 'get',
+              success: function(res) {
+
+                  $(".player2 .cards").css('background-image','url("images/cards/'+res.url+'.png")');
+                  $(".player2 .cards span").html(res.tailleTas);
+                  $(".player2 .deck span").html(res.tailleDeck);
+
+                  var audio = new Audio('sounds/'+res.url+'.mp3');
+                  audio.play();
+                  if (res.tailleDeck == 0) {
+                    alert("Player 2 win")
+                  };
+              },
+              error:function(xhr, status, error){
+              
+                  console.log(xhr.responseText);
+                  return false;
+              }
+          });
+
         }
+
         if ( event.which == 39 ) {
-          playerCounter2++;
-          var msg = "(" + playerCounter2 + ")";
-          $('#cards_list2').append($('<li>').html("<img src=\"/images/cards/1.png\">"));
-          $("#player2 small").html(msg);
+          
+          // Hide totem
+          $(".totem").hide();
+              $.ajax({
+                url:"/api/p2tp1",
+                type: 'get',
+                success: function(res) {
+                    
+                    console.log(res);
+                },
+                error:function(xhr, status, error){
+                
+                    console.log(xhr.responseText);
+                    return false;
+                }
+            });
         }
       });
 

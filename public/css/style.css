@@ -1,0 +1,103 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font: 13px Helvetica, Arial;
+  background-image: url("../images/bg.png");
+}
+.totem{
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   margin-top: -150px; /* Half the height */
+   margin-left: -100px; /* Half the width */
+}
+/*  PLAYER */
+.player1{
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -150px;
+}
+.player1 h3{
+  text-align: center;
+}
+.player1 .cards{
+  background: #fff;
+  height: 250px;
+  width: 200px;
+  border-radius: 6px;
+  border: 6px solid #f7a23c;
+  margin-top: 15px;
+  float: left;
+  text-align: right;
+  padding-top: 212px;
+  padding-right: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #f7a23c;
+}
+.player1 .cards span{
+}
+.player1 .deck{
+  float: right;
+  margin-left: 20px;
+  background: #f7a23c;
+  height: 130px;
+  width: 100px;
+  border-radius: 6px;
+  margin-top: 60px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 125px;
+}
+.player1 .deck span{
+  
+}
+
+
+/*  PALYER2  */
+.player2{
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  margin-left: -150px;
+  padding-bottom: 5px;
+}
+.player2 h3{
+  text-align: center;
+}
+.player2 .cards{
+  background: #fff;
+  height: 250px;
+  width: 200px;
+  border-radius: 6px;
+  border: 6px solid #f7a23c;
+  margin-top: 15px;
+  float: left;
+  text-align: right;
+  padding-top: 212px;
+  padding-right: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #f7a23c;
+
+}
+.player2 .cards span{
+}
+.player2 .deck{
+  float: right;
+  margin-left: 20px;
+  background: #f7a23c;
+  height: 130px;
+  width: 100px;
+  border-radius: 6px;
+  margin-top: 60px;
+  text-align: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  line-height: 125px;
+}
+.player2 .deck span{
+  
+}
